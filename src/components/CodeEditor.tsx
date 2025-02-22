@@ -1,6 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
-import { Editor } from "@monaco-editor/react";
+import { useState } from "react";
 import { Button } from "@/components/Button";
 
 import dynamic from "next/dynamic";
@@ -20,8 +19,7 @@ const CodeEditor = () => {
   });
 
   const [isLoading, setIsLoading] = useState(false);
-  const [language, setLanguage] = useState("javascript");
-  const [isMounted, setIsMounted] = useState(false);
+  const [language] = useState("javascript");
 
 
 
@@ -36,16 +34,19 @@ const CodeEditor = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ code, language }),
       });
-
+    
       const data = await response.json();
       setReview(data);
-    } catch (error) {
-      setReview({ issues: ["Error fetching review"], suggestions: [], corrected_code: "" });
+    } catch (error: any) {
+      setReview({ 
+        issues: [`Error fetching review: ${error.message || "Unknown error"}`], 
+        suggestions: [], 
+        corrected_code: "" 
+      });
     }
-
+    
     setIsLoading(false);
-  };
-  
+  }
   return (
     <div className="flex flex-col items-center justify-center min-h-screen w-full px-4 sm:px-6 lg:px-12">
       <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-center">AI Code Review</h1>
