@@ -37,12 +37,20 @@ const CodeEditor = () => {
     
       const data = await response.json();
       setReview(data);
-    } catch (error: any) {
-      setReview({ 
-        issues: [`Error fetching review: ${error.message || "Unknown error"}`], 
-        suggestions: [], 
-        corrected_code: "" 
-      });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setReview({ 
+          issues: [`Error fetching review: ${error.message}`], 
+          suggestions: [], 
+          corrected_code: "" 
+        });
+      } else {
+        setReview({ 
+          issues: ["An unknown error occurred"], 
+          suggestions: [], 
+          corrected_code: "" 
+        });
+      }
     }
     
     setIsLoading(false);
