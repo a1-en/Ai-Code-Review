@@ -19,12 +19,21 @@ const CodeEditor = () => {
   });
 
   const [isLoading, setIsLoading] = useState(false);
-  const [language] = useState("javascript");
+  const [language, setLanguage] = useState("javascript");
 
 
 
 
   const handleReview = async () => {
+
+    if (!code.trim()) {
+      setReview({ 
+        issues: ["Code editor is empty. Please write a code to review."], 
+        suggestions: [], 
+        corrected_code: "" 
+      });
+      return;
+    }
     setIsLoading(true);
     setReview({ issues: [], suggestions: [], corrected_code: "" });
 
@@ -58,7 +67,20 @@ const CodeEditor = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen w-full px-4 sm:px-6 lg:px-12">
       <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-center">AI Code Review</h1>
-
+      <select
+        className="mb-4 p-2 border rounded-lg shadow-md bg-gray-800 text-white w-48"
+        value={language}
+        onChange={(e) => setLanguage(e.target.value)}
+      >
+        <option value="javascript">JavaScript</option>
+        <option value="typescript">TypeScript</option>
+        <option value="python">Python</option>
+        <option value="java">Java</option>
+        <option value="cpp">C++</option>
+        <option value="ruby">Ruby</option>
+        <option value="go">Go</option>
+        <option value="php">PHP</option>
+      </select>
       {/* Language Selector */}
 
       <div className="w-full max-w-5xl border rounded-lg overflow-hidden shadow-lg">
