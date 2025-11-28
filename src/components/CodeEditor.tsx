@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button } from "@/components/Button";
 import dynamic from "next/dynamic";
 import { Code2, AlertTriangle, Lightbulb, CheckCircle } from "lucide-react";
+import { saveReviewToHistory } from "@/lib/history";
 
 const MonacoEditor = dynamic(() => import("@monaco-editor/react"), { ssr: false });
 
@@ -42,6 +43,11 @@ const CodeEditor = () => {
 
       const data = await response.json();
       setReview(data);
+      
+      // Save to history
+      if (data && (data.issues?.length > 0 || data.suggestions?.length > 0 || data.corrected_code)) {
+        saveReviewToHistory(code, language, data);
+      }
     } catch (error: unknown) {
       if (error instanceof Error) {
         setReview({
