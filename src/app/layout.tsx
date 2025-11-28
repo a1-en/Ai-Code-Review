@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "AI Code Reviewer",
-  description: "AI Code Reviewer (Gemini model 1.5)",
+  description: "AI Code Reviewer using OpenAI API",
 };
 
 export default function RootLayout({
