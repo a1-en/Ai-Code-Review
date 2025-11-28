@@ -13,7 +13,7 @@ export default function Home() {
             Write, analyze, and improve your code in real-time.
           </p>
         </div>
-        <CodeEditor />
+      <CodeEditor />
       </div>
     </main>
   );
